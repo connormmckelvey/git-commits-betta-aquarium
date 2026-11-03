@@ -1,7 +1,7 @@
 # 🐟 git-pet
 
 <div align="center">
-  <img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="600" />
+  <img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />
   <p><strong>A living, procedural pixel-art Betta aquarium that grows with every GitHub commit.</strong></p>
 </div>
 
@@ -10,7 +10,7 @@
 
 | Repository | Growth Stage & Commits | Languages & Color Ramps | Phenotype & Finnage | Last Active |
 | :--- | :--- | :--- | :--- | :--- |
-| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🍼 **Baby Fry (Level 1)**<br>`6` commits | **Body:** `C (91%)`<br>**Fins:** `Python (9%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | Today |
+| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🍼 **Baby Fry (Level 1)**<br>`7` commits | **Body:** `C (91%)`<br>**Fins:** `Python (9%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | Today |
 | [**portfolio**](https://github.com/connormmckelvey/portfolio) | 🐟 **Mature Adult (Level 3)**<br>`101` commits | **Body:** `HTML (42%)`<br>**Fins:** `JavaScript (34%)`<br>**Accents:** `CSS (24%)` | **Veiltail Cascade**<br>*Compact Chubby* | 5d ago |
 | [**Haplink**](https://github.com/connormmckelvey/Haplink) | 🐠 **Juvenile (Level 2)**<br>`40` commits | **Body:** `Python (79%)`<br>**Fins:** `C++ (18%)`<br>**Accents:** `C (3%)` | **Plakat Fighter Blade**<br>*Agile Predator* | 29d ago |
 | [**surgical-cleaning-robot**](https://github.com/connormmckelvey/surgical-cleaning-robot) | 🍼 **Baby Fry (Level 1)**<br>`5` commits | **Body:** `Python (39%)`<br>**Fins:** `C (36%)`<br>**Accents:** `C++ (14%)` | **Doubletail Twin-Lobe**<br>*Sleek Torpedo* | 98d ago |

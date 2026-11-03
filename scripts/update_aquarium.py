@@ -190,6 +190,8 @@ def main():
     parser.add_argument("--current-repo", help="Always include this repo (defaults to GITHUB_REPOSITORY)")
     parser.add_argument("--mode", default="stream", choices=["stream", "cross"],
                         help="Aquarium style: 'stream' (zen calm hover, default) or 'cross' (slow leisurely cruise)")
+    parser.add_argument("--tank-width", type=int, default=320, help="Tank simulation width (default: 320)")
+    parser.add_argument("--tank-height", type=int, default=180, help="Tank simulation height (default: 180)")
     parser.add_argument("--out", default="assets/aquarium.gif", help="Output aquarium GIF path")
     parser.add_argument("--readme", default="README.md", help="Path to README.md to update with fish table (or empty to disable)")
     parser.add_argument("--token", help="GitHub token (defaults to GITHUB_TOKEN env var)")
@@ -318,6 +320,8 @@ def main():
         "--frames", str(args.frames),
         "--fps", str(args.fps),
         "--scale", "2",
+        "--tank-width", str(args.tank_width),
+        "--tank-height", str(args.tank_height),
         "--out", args.out
     ]
 

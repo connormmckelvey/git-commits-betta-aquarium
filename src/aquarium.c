@@ -85,8 +85,8 @@ int generate_aquarium(const GenerateArgs* args) {
 
     int is_stream_mode = (args->aquarium_mode && strcmp(args->aquarium_mode, "stream") == 0);
 
-    int tank_w = (args->tank_width >= 120) ? args->tank_width : 240;
-    int tank_h = (args->tank_height >= 90) ? args->tank_height : 160;
+    int tank_w = (args->tank_width >= 120) ? args->tank_width : 320;
+    int tank_h = (args->tank_height >= 90) ? args->tank_height : 180;
     int fish_count = (args->fish_count >= 1 && args->fish_count <= 8) ? args->fish_count : 3;
     int default_frames = is_stream_mode ? 60 : 144;
     int num_frames = (args->frames >= 4) ? args->frames : default_frames;
@@ -104,8 +104,8 @@ int generate_aquarium(const GenerateArgs* args) {
                fish_count, num_frames, fps);
     } else {
         printf("Starting Procedural Cross Aquarium Simulation (Mode: Cross - Ultra-Slow Chill Traverse)\n");
-        printf("  Tank Resolution: %dx%d (Output: 480x320 @ scale %d)\n",
-               tank_w, tank_h, scale);
+        printf("  Tank Resolution: %dx%d (Output: %dx%d @ scale %d)\n", tank_w, tank_h, tank_w * scale, tank_h * scale, scale);
+
         printf("  Fish Population: %d fish | Frames: %d @ %d fps (Leisurely cruise, off-screen flips)\n",
                fish_count, num_frames, fps);
     }
@@ -168,8 +168,8 @@ int generate_aquarium(const GenerateArgs* args) {
 
         if (is_stream_mode) {
             /* Option B: Terraced streaming stations across the aquarium (peaceful upstream hover) */
-            float station_x_ratios[6] = { 0.50f, 0.68f, 0.56f, 0.40f, 0.70f, 0.46f };
-            float station_y_ratios[6] = { 0.48f, 0.32f, 0.68f, 0.56f, 0.46f, 0.28f };
+            float station_x_ratios[6] = { 0.48f, 0.74f, 0.30f, 0.58f, 0.82f, 0.35f };
+            float station_y_ratios[6] = { 0.46f, 0.28f, 0.65f, 0.76f, 0.52f, 0.24f };
             int idx = k % 6;
 
             fa->x0 = (float)tank_w * station_x_ratios[idx];
@@ -233,8 +233,8 @@ int generate_aquarium(const GenerateArgs* args) {
     }
 
     /* 2. Initialize Ambient Air Bubbles */
-    AmbientBubble bubbles[12];
-    for (int b = 0; b < 12; b++) {
+    AmbientBubble bubbles[18];
+    for (int b = 0; b < 18; b++) {
         bubbles[b].x = 12.0f + (float)(b * 19 % (tank_w - 24));
         bubbles[b].y_start = (float)((b * 37) % tank_h);
         bubbles[b].speed = 7.0f + (float)(b % 3) * 2.5f;
@@ -289,7 +289,7 @@ int generate_aquarium(const GenerateArgs* args) {
         }
 
         /* Ambient Water Bubbles (peaceful, tranquil, seamless loop) */
-        for (int b = 0; b < 12; b++) {
+        for (int b = 0; b < 18; b++) {
             float by, bx_f;
             if (is_stream_mode) {
                 /* Calm stream: gentle upward drift and subtle horizontal current sway */

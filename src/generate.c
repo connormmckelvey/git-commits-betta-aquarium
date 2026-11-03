@@ -33,8 +33,8 @@ GenerateArgs default_generate_args(void) {
     a.grow_animation = 0;
     a.aquarium       = 0;
     a.aquarium_mode  = "cross";
-    a.tank_width     = 240;
-    a.tank_height    = 160;
+    a.tank_width     = 320;
+    a.tank_height    = 180;
     a.fish_count     = 3;
     a.fish_seeds     = NULL;
     a.fish_themes    = NULL;
