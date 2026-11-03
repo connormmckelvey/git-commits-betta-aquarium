@@ -10,11 +10,12 @@
 
 | Repository | Growth Stage & Commits | Languages & Color Ramps | Phenotype & Finnage | Last Active |
 | :--- | :--- | :--- | :--- | :--- |
-| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🍼 **Baby Fry (Level 1)**<br>`8` commits | **Body:** `C (91%)`<br>**Fins:** `Python (9%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | Today |
+| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🍼 **Baby Fry (Level 1)**<br>`9` commits | **Body:** `C (91%)`<br>**Fins:** `Python (9%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | Today |
 | [**portfolio**](https://github.com/connormmckelvey/portfolio) | 🐟 **Mature Adult (Level 3)**<br>`101` commits | **Body:** `HTML (42%)`<br>**Fins:** `JavaScript (34%)`<br>**Accents:** `CSS (24%)` | **Veiltail Cascade**<br>*Compact Chubby* | 5d ago |
 | [**Haplink**](https://github.com/connormmckelvey/Haplink) | 🐠 **Juvenile (Level 2)**<br>`40` commits | **Body:** `Python (79%)`<br>**Fins:** `C++ (18%)`<br>**Accents:** `C (3%)` | **Plakat Fighter Blade**<br>*Agile Predator* | 29d ago |
 | [**surgical-cleaning-robot**](https://github.com/connormmckelvey/surgical-cleaning-robot) | 🍼 **Baby Fry (Level 1)**<br>`5` commits | **Body:** `Python (39%)`<br>**Fins:** `C (36%)`<br>**Accents:** `C++ (14%)` | **Doubletail Twin-Lobe**<br>*Sleek Torpedo* | 98d ago |
 | [**surgical-arm-ros2**](https://github.com/connormmckelvey/surgical-arm-ros2) | 🐠 **Juvenile (Level 2)**<br>`21` commits | **Body:** `Python (96%)`<br>**Fins:** `Shell (3%)`<br>**Accents:** `PowerShell (1%)` | **Doubletail Twin-Lobe**<br>*Royal Crest* | 113d ago |
+| [**TACTUS-Medical-Robotics-FRI-Project**](https://github.com/connormmckelvey/TACTUS-Medical-Robotics-FRI-Project) | 🐠 **Juvenile (Level 2)**<br>`29` commits | **Body:** `HTML (51%)`<br>**Fins:** `Python (32%)`<br>**Accents:** `C++ (17%)` | **Rosetail Petal-Fringe**<br>*Sleek Torpedo* | 186d ago |
 <!-- FISH_TABLE_END -->
 
 ---

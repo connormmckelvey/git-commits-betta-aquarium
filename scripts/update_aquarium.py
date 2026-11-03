@@ -181,9 +181,9 @@ def find_binary(explicit_path=None):
 def main():
     parser = argparse.ArgumentParser(description="Generate updating aquarium GIF with activity deadline filter.")
     parser.add_argument("--user", help="GitHub username/organization (defaults to GITHUB_REPOSITORY_OWNER)")
-    parser.add_argument("--deadline-days", type=int, default=60,
+    parser.add_argument("--deadline-days", type=int, default=365,
                         help="Only include repos updated within this many days (default: 60)")
-    parser.add_argument("--max-fish", type=int, default=4,
+    parser.add_argument("--max-fish", type=int, default=6,
                         help="Max fish in the aquarium to prevent overcrowding (default: 4, max: 6)")
     parser.add_argument("--include-forks", action="store_true", help="Include forked repositories (default: False)")
     parser.add_argument("--include-archived", action="store_true", help="Include archived repositories (default: False)")
