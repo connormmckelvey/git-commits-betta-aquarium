@@ -79,6 +79,87 @@ def get_repo_languages(owner, repo_name, token=None):
         parts.append(f"{name}:{pct:.0f}")
     return ",".join(parts)
 
+def format_time_ago(days):
+    if days < 0.1:
+        return "Today"
+    elif days < 1.0:
+        return f"{max(1, int(days * 24))}h ago"
+    elif days < 2.0:
+        return "Yesterday"
+    else:
+        return f"{int(round(days))}d ago"
+
+def get_stage_icon(stage_str):
+    s = stage_str.lower()
+    if "fry" in s or "baby" in s:
+        return "🍼"
+    if "juvenile" in s:
+        return "🐠"
+    if "adult" in s:
+        return "🐟"
+    if "elder" in s:
+        return "👑"
+    if "leviathan" in s:
+        return "🐉"
+    return "🐟"
+
+def parse_lang_slots(lang_str):
+    """Split comma string like 'C:94,Python:6,Makefile:1' into body, fins, and accent descriptions."""
+    parts = [p.strip() for p in lang_str.split(",") if p.strip()]
+    def fmt(p):
+        if ":" in p:
+            k, v = p.split(":", 1)
+            return f"{k} ({v}%)"
+        return p
+    body = fmt(parts[0]) if len(parts) > 0 else "Primary Shade"
+    fins = fmt(parts[1]) if len(parts) > 1 else "Tonal Shade"
+    accent = fmt(parts[2]) if len(parts) > 2 else "Iridescent Shimmer"
+    return body, fins, accent
+
+def update_readme_table(readme_path, fish_rows):
+    """Insert or update the live fish roster table in README.md."""
+    if not os.path.isfile(readme_path):
+        return
+
+    with open(readme_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    table_header = (
+        "<!-- FISH_TABLE_START -->\n"
+        "### 🐠 Swimming in the Aquarium\n\n"
+        "| Repository | Growth Stage & Commits | Languages & Color Ramps | Phenotype & Finnage | Last Active |\n"
+        "| :--- | :--- | :--- | :--- | :--- |\n"
+    )
+
+    rows_md = []
+    for f in fish_rows:
+        rows_md.append(
+            f"| [**{f['name']}**]({f['url']}) "
+            f"| {f['icon']} **{f['stage']}**<br>`{f['commits']:,}` commits "
+            f"| **Body:** `{f['body_lang']}`<br>**Fins:** `{f['fin_lang']}`<br>**Accents:** `{f['accent_lang']}` "
+            f"| **{f['fin_style']}**<br>*{f['archetype']}* "
+            f"| {f['last_active']} |"
+        )
+
+    table_body = "\n".join(rows_md) + "\n<!-- FISH_TABLE_END -->"
+    new_block = table_header + table_body
+
+    pattern = r"<!-- FISH_TABLE_START -->.*?<!-- FISH_TABLE_END -->"
+    if re.search(pattern, content, flags=re.DOTALL):
+        updated_content = re.sub(pattern, new_block, content, flags=re.DOTALL)
+    else:
+        anchor = "</div>\n"
+        if anchor in content:
+            idx = content.find(anchor) + len(anchor)
+            updated_content = content[:idx] + "\n" + new_block + "\n" + content[idx:]
+        else:
+            updated_content = content + "\n\n" + new_block
+
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(updated_content)
+
+    print(f"Updated live fish roster table in {readme_path}")
+
 def find_binary(explicit_path=None):
     """Locate the git-betta binary across platforms."""
     candidates = [
@@ -108,6 +189,7 @@ def main():
     parser.add_argument("--include-archived", action="store_true", help="Include archived repositories (default: False)")
     parser.add_argument("--current-repo", help="Always include this repo (defaults to GITHUB_REPOSITORY)")
     parser.add_argument("--out", default="assets/aquarium.gif", help="Output aquarium GIF path")
+    parser.add_argument("--readme", default="README.md", help="Path to README.md to update with fish table (or empty to disable)")
     parser.add_argument("--token", help="GitHub token (defaults to GITHUB_TOKEN env var)")
     parser.add_argument("--binary", help="Path to git-betta binary")
     parser.add_argument("--frames", type=int, default=96, help="Animation frames (default: 96)")
@@ -246,10 +328,67 @@ def main():
 
     cmd[0] = binary
     print(f"\nRendering aquarium GIF with {binary}...")
-    result = subprocess.run(cmd)
+    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    if result.stdout:
+        print(result.stdout)
 
     if result.returncode == 0:
         print(f"\nSuccessfully generated {args.out} with {len(final_repos)} active repository fish!")
+
+        # Parse output for fish traits and phenotypes
+        fish_data_by_repo = {}
+        for line in result.stdout.splitlines():
+            m = re.search(r'Fish #\d+:\s+Repo\s+"([^"]+)"\s+\[(\d+)\s+commits\s+-\s+([^\]]+)\]\s+\|\s+([^|]+)\|\s+(.*)', line)
+            if m:
+                r_seed, r_c, r_st, r_fin, r_arch = m.groups()
+                fish_data_by_repo[r_seed] = {
+                    "stage": r_st.strip(),
+                    "fin_style": r_fin.strip(),
+                    "archetype": r_arch.strip()
+                }
+
+        fish_rows = []
+        for idx, r in enumerate(final_repos):
+            owner = r.get("owner", {}).get("login", user)
+            rname = r.get("name")
+            full_name = r.get("full_name", f"{owner}/{rname}")
+            html_url = r.get("html_url", f"https://github.com/{full_name}")
+
+            pushed_str = r.get("pushed_at")
+            age_str = "Recently"
+            if pushed_str:
+                try:
+                    pushed_dt = datetime.fromisoformat(pushed_str.replace("Z", "+00:00"))
+                    age_days = (now - pushed_dt).total_seconds() / 86400.0
+                    age_str = format_time_ago(age_days)
+                except Exception:
+                    pass
+
+            meta = fish_data_by_repo.get(full_name, {})
+            stage_name = meta.get("stage", "Active")
+            fin_name = meta.get("fin_style", "Flowing Fins")
+            arch_name = meta.get("archetype", "Standard")
+
+            lang_raw = languages_list[idx]
+            b_lang, f_lang, a_lang = parse_lang_slots(lang_raw)
+
+            fish_rows.append({
+                "name": rname,
+                "full_name": full_name,
+                "url": html_url,
+                "commits": int(commits_list[idx]),
+                "stage": stage_name,
+                "icon": get_stage_icon(stage_name),
+                "body_lang": b_lang,
+                "fin_lang": f_lang,
+                "accent_lang": a_lang,
+                "fin_style": fin_name,
+                "archetype": arch_name,
+                "last_active": age_str
+            })
+
+        if args.readme:
+            update_readme_table(args.readme, fish_rows)
     else:
         print(f"\nError: git-betta exited with code {result.returncode}", file=sys.stderr)
         sys.exit(result.returncode)
