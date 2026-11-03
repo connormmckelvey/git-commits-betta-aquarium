@@ -188,15 +188,20 @@ def main():
     parser.add_argument("--include-forks", action="store_true", help="Include forked repositories (default: False)")
     parser.add_argument("--include-archived", action="store_true", help="Include archived repositories (default: False)")
     parser.add_argument("--current-repo", help="Always include this repo (defaults to GITHUB_REPOSITORY)")
+    parser.add_argument("--mode", default="stream", choices=["stream", "cross"],
+                        help="Aquarium style: 'stream' (zen calm hover, default) or 'cross' (slow leisurely cruise)")
     parser.add_argument("--out", default="assets/aquarium.gif", help="Output aquarium GIF path")
     parser.add_argument("--readme", default="README.md", help="Path to README.md to update with fish table (or empty to disable)")
     parser.add_argument("--token", help="GitHub token (defaults to GITHUB_TOKEN env var)")
     parser.add_argument("--binary", help="Path to git-betta binary")
-    parser.add_argument("--frames", type=int, default=96, help="Animation frames (default: 96)")
-    parser.add_argument("--fps", type=int, default=12, help="Playback fps (default: 12)")
+    parser.add_argument("--frames", type=int, default=None, help="Animation frames (default: 60 for stream, 144 for cross)")
+    parser.add_argument("--fps", type=int, default=10, help="Playback fps (default: 10)")
     parser.add_argument("--dry-run", action="store_true", help="Print selected repos without executing binary")
 
     args = parser.parse_args()
+
+    if args.frames is None:
+        args.frames = 60 if args.mode == "stream" else 144
 
     token = args.token or os.environ.get("GITHUB_TOKEN")
     user = args.user or os.environ.get("GITHUB_REPOSITORY_OWNER")
@@ -305,7 +310,7 @@ def main():
     cmd = [
         "__BINARY__",
         "--aquarium",
-        "--cross",
+        "--stream" if args.mode == "stream" else "--cross",
         "--fish-count", str(len(final_repos)),
         "--seeds", ",".join(seeds),
         "--fish-commits", ",".join(commits_list),

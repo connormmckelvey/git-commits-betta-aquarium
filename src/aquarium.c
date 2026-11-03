@@ -88,25 +88,25 @@ int generate_aquarium(const GenerateArgs* args) {
     int tank_w = (args->tank_width >= 120) ? args->tank_width : 240;
     int tank_h = (args->tank_height >= 90) ? args->tank_height : 160;
     int fish_count = (args->fish_count >= 1 && args->fish_count <= 8) ? args->fish_count : 3;
-    int default_frames = is_stream_mode ? 36 : 120;
+    int default_frames = is_stream_mode ? 60 : 144;
     int num_frames = (args->frames >= 4) ? args->frames : default_frames;
-    int default_fps = 12;
+    int default_fps = 10;
     int fps = (args->fps >= 1) ? args->fps : default_fps;
     int delay_cs = 100 / fps;
     int scale = (args->scale >= 1) ? args->scale : 2;
     const char* out_gif = args->out_gif ? args->out_gif : "dist/aquarium.gif";
 
     if (is_stream_mode) {
-        printf("Starting Procedural Stream Aquarium Simulation (Mode: Stream - Upstream Current)\n");
+        printf("Starting Procedural Stream Aquarium Simulation (Mode: Stream - Chill Station Hover)\n");
         printf("  Tank Resolution: %dx%d (Output: %dx%d @ scale %d)\n",
                tank_w, tank_h, tank_w * scale, tank_h * scale, scale);
-        printf("  Fish Population: %d fish | Frames: %d @ %d fps (Calm upstream station hover)\n",
+        printf("  Fish Population: %d fish | Frames: %d @ %d fps (Calm zen hover, silky fins)\n",
                fish_count, num_frames, fps);
     } else {
-        printf("Starting Procedural Cross Aquarium Simulation (Mode: Cross - Chill Screen Traverse)\n");
-        printf("  Tank Resolution: %dx%d (Output: %dx%d @ scale %d)\n",
-               tank_w, tank_h, tank_w * scale, tank_h * scale, scale);
-        printf("  Fish Population: %d fish | Frames: %d @ %d fps (Chill traverse, off-screen flips)\n",
+        printf("Starting Procedural Cross Aquarium Simulation (Mode: Cross - Ultra-Slow Chill Traverse)\n");
+        printf("  Tank Resolution: %dx%d (Output: 480x320 @ scale %d)\n",
+               tank_w, tank_h, scale);
+        printf("  Fish Population: %d fish | Frames: %d @ %d fps (Leisurely cruise, off-screen flips)\n",
                fish_count, num_frames, fps);
     }
 
@@ -167,17 +167,17 @@ int generate_aquarium(const GenerateArgs* args) {
         }
 
         if (is_stream_mode) {
-            /* Option B: Terraced streaming stations across the aquarium (swimming upstream into current) */
-            float station_x_ratios[6] = { 0.52f, 0.68f, 0.58f, 0.42f, 0.72f, 0.46f };
-            float station_y_ratios[6] = { 0.48f, 0.32f, 0.66f, 0.58f, 0.50f, 0.28f };
+            /* Option B: Terraced streaming stations across the aquarium (peaceful upstream hover) */
+            float station_x_ratios[6] = { 0.50f, 0.68f, 0.56f, 0.40f, 0.70f, 0.46f };
+            float station_y_ratios[6] = { 0.48f, 0.32f, 0.68f, 0.56f, 0.46f, 0.28f };
             int idx = k % 6;
 
             fa->x0 = (float)tank_w * station_x_ratios[idx];
             fa->y0 = (float)tank_h * station_y_ratios[idx];
 
-            /* Gentle surge-and-glide drift against the current */
-            fa->rx = 12.0f + (float)(k * 4 % 8); /* 12 to 19 px forward/back surge */
-            fa->ry = 6.0f + (float)(k * 3 % 5);   /* 6 to 10 px vertical buoyancy */
+            /* Serene micro-surge and gentle buoyancy drift */
+            fa->rx = 6.0f + (float)(k * 3 % 5); /* 6 to 10 px subtle drift */
+            fa->ry = 3.0f + (float)(k * 2 % 3); /* 3 to 5 px vertical buoyancy */
             fa->freq_x = 1;
             fa->freq_y = 1;
 
@@ -186,30 +186,30 @@ int generate_aquarium(const GenerateArgs* args) {
             fa->phase_y = angle_offset + 0.5f * (float)M_PI;
             fa->phase_z = angle_offset + 0.8f;
 
-            fa->beats_per_loop = 2; /* 2 full fluid swim cycles per loop */
+            fa->beats_per_loop = 2; /* 2 full slow fluid swim cycles per loop */
             fa->beat_offset = (float)k * 2.1f;
             fa->scale_factor = 0.92f + 0.08f * (float)(k % 2);
         } else {
-            /* Cross Mode: Traverse full tank width with generous off-screen turnaround */
-            float offscreen_margin = 92.0f;
+            /* Cross Mode: Ultra-slow leisurely traverse with tight off-screen turnaround */
+            float offscreen_margin = 54.0f;
             fa->rx = (float)tank_w * 0.5f + offscreen_margin;
 
             /* Stagger vertical lanes to prevent overlap */
-            float y_min = 46.0f;
-            float y_max = (float)tank_h - 46.0f;
+            float y_min = 44.0f;
+            float y_max = (float)tank_h - 44.0f;
             float y_step = (fish_count > 1) ? (y_max - y_min) / (float)(fish_count - 1) : 0.0f;
             fa->y0 = y_min + (float)k * y_step;
 
             /* Gentle vertical buoyancy oscillation during horizontal cross */
-            fa->ry = 3.5f + (float)(k % 3) * 1.0f;
+            fa->ry = 2.0f + (float)(k % 3) * 0.6f;
 
             float angle_offset = 2.0f * (float)M_PI * (float)k / (float)fish_count;
             fa->phase_x = angle_offset;
             fa->phase_y = angle_offset * 1.5f;
             fa->phase_z = -0.4f + 0.8f * ((float)k / (float)(fish_count > 1 ? fish_count - 1 : 1));
 
-            /* Automatically set beats to ensure ~18-22 frames per swim beat (chill silk undulation) */
-            int beats = (int)roundf((float)num_frames / 20.0f);
+            /* Chill silk undulation: ~34-38 frames per swim beat */
+            int beats = (int)roundf((float)num_frames / 36.0f);
             if (beats < 1) beats = 1;
             fa->beats_per_loop = beats;
             fa->beat_offset = (float)k * 2.1f;
@@ -292,13 +292,13 @@ int generate_aquarium(const GenerateArgs* args) {
         for (int b = 0; b < 12; b++) {
             float by, bx_f;
             if (is_stream_mode) {
-                /* Calm stream: subtle upward drift and gentle horizontal current sway */
-                by = bubbles[b].y_start - 10.0f * sinf(tau + (float)b * 0.8f);
-                bx_f = bubbles[b].x - 6.0f * sinf(tau + (float)b * 0.5f);
+                /* Calm stream: gentle upward drift and subtle horizontal current sway */
+                by = bubbles[b].y_start - 6.0f * sinf(tau + (float)b * 0.8f);
+                bx_f = bubbles[b].x - 3.0f * sinf(tau + (float)b * 0.5f);
             } else {
                 /* Serene buoyant floating micro-bubbles in open tank */
-                by = bubbles[b].y_start - 8.0f * sinf(tau + (float)b * 0.7f);
-                bx_f = bubbles[b].x + 3.0f * sinf(tau * 2.0f + (float)b);
+                by = bubbles[b].y_start - 5.0f * sinf(tau + (float)b * 0.7f);
+                bx_f = bubbles[b].x + 2.0f * sinf(tau * 2.0f + (float)b);
             }
 
             while (by < 0.0f) by += (float)tank_h;
@@ -387,7 +387,7 @@ int generate_aquarium(const GenerateArgs* args) {
             bcfg.length      = (int)roundf((float)fa->traits.body_length * fa->scale_factor);
             bcfg.plumpness   = fa->traits.belly_depth;
             bcfg.swim_phase  = fish_swim_phase[k];
-            bcfg.swim_amp    = 2.6f * fa->scale_factor; /* Full lifelike undulation matching octocat */
+            bcfg.swim_amp    = (is_stream_mode ? 1.4f : 1.6f) * fa->scale_factor; /* Relaxed silky undulation */
             bcfg.facing_left = 1; /* Render standard complete fish into fgrid */
             bcfg.traits      = fa->traits;
 

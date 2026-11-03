@@ -42,11 +42,13 @@ jobs:
           # Configurable parameters:
           #   --deadline-days 120 : Only show repos active within last 120 days
           #   --max-fish 5        : Max capacity limit to prevent tank overcrowding
+          #   --mode stream       : "stream" for zen station hover, or "cross" for slow traverse
           python scripts/update_aquarium.py \
             --user "${{ github.repository_owner }}" \
             --current-repo "${{ github.repository }}" \
             --deadline-days 120 \
             --max-fish 5 \
+            --mode stream \
             --out assets/aquarium.gif \
             --readme README.md
 
