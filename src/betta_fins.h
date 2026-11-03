@@ -7,6 +7,7 @@
 
 typedef struct {
     float       flow_phase;     /* Flow phase offset (0.0f for static, animated in phase 2) */
+    float       pectoral_phase; /* Independent rapid pectoral fin flutter phase (default: 0 = 2.5x flow) */
     float       fin_scale;      /* Fin size scale factor (default: 1.0f) */
     int         show_caudal;    /* 1 to render caudal (tail) halfmoon fan */
     int         show_dorsal;    /* 1 to render dorsal top sail */

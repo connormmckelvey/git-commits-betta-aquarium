@@ -1,21 +1,25 @@
 # 🐟 git-pet
 
 <div align="center">
-  <img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/aquarium_dark.gif">
+    <source media="(prefers-color-scheme: light)" srcset="assets/aquarium_light.gif">
+    <img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />
+  </picture>
   <p><strong>A living, procedural pixel-art Betta aquarium that grows with every GitHub commit.</strong></p>
 </div>
 
 <!-- FISH_TABLE_START -->
 ### 🐠 Swimming in the Aquarium
 
-| Repository | Growth Stage & Commits | Languages & Color Ramps | Phenotype & Finnage | Last Active |
+| Repository | Growth Stage & Commits | Languages & Color Ramps | Phenotype & Finnage | Stars & Activity |
 | :--- | :--- | :--- | :--- | :--- |
-| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🍼 **Baby Fry (Level 1)**<br>`10` commits | **Body:** `C (91%)`<br>**Fins:** `Python (9%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | Today |
-| [**portfolio**](https://github.com/connormmckelvey/portfolio) | 🐟 **Mature Adult (Level 3)**<br>`101` commits | **Body:** `HTML (42%)`<br>**Fins:** `JavaScript (34%)`<br>**Accents:** `CSS (24%)` | **Veiltail Cascade**<br>*Compact Chubby* | 5d ago |
-| [**Haplink**](https://github.com/connormmckelvey/Haplink) | 🐠 **Juvenile (Level 2)**<br>`40` commits | **Body:** `Python (79%)`<br>**Fins:** `C++ (18%)`<br>**Accents:** `C (3%)` | **Plakat Fighter Blade**<br>*Agile Predator* | 29d ago |
-| [**surgical-cleaning-robot**](https://github.com/connormmckelvey/surgical-cleaning-robot) | 🍼 **Baby Fry (Level 1)**<br>`5` commits | **Body:** `Python (39%)`<br>**Fins:** `C (36%)`<br>**Accents:** `C++ (14%)` | **Doubletail Twin-Lobe**<br>*Sleek Torpedo* | 98d ago |
-| [**surgical-arm-ros2**](https://github.com/connormmckelvey/surgical-arm-ros2) | 🐠 **Juvenile (Level 2)**<br>`21` commits | **Body:** `Python (96%)`<br>**Fins:** `Shell (3%)`<br>**Accents:** `PowerShell (1%)` | **Doubletail Twin-Lobe**<br>*Royal Crest* | 113d ago |
-| [**TACTUS-Medical-Robotics-FRI-Project**](https://github.com/connormmckelvey/TACTUS-Medical-Robotics-FRI-Project) | 🐠 **Juvenile (Level 2)**<br>`29` commits | **Body:** `HTML (51%)`<br>**Fins:** `Python (32%)`<br>**Accents:** `C++ (17%)` | **Rosetail Petal-Fringe**<br>*Sleek Torpedo* | 186d ago |
+| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🍼 **Baby Fry (Level 1)**<br>`11` commits | **Body:** `C (91%)`<br>**Fins:** `Python (9%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | ⭐ 0 stars<br>🫧 **Active (<48h)** |
+| [**portfolio**](https://github.com/connormmckelvey/portfolio) | 🐟 **Mature Adult (Level 3)**<br>`101` commits | **Body:** `HTML (42%)`<br>**Fins:** `JavaScript (34%)`<br>**Accents:** `CSS (24%)` | **Veiltail Cascade**<br>*Compact Chubby* | ⭐ 0 stars<br>💤 *5d ago* |
+| [**Haplink**](https://github.com/connormmckelvey/Haplink) | 🐠 **Juvenile (Level 2)**<br>`40` commits | **Body:** `Python (79%)`<br>**Fins:** `C++ (18%)`<br>**Accents:** `C (3%)` | **Plakat Fighter Blade**<br>*Agile Predator* | ⭐ 5 stars<br>💤 *29d ago* |
+| [**surgical-cleaning-robot**](https://github.com/connormmckelvey/surgical-cleaning-robot) | 🍼 **Baby Fry (Level 1)**<br>`5` commits | **Body:** `Python (39%)`<br>**Fins:** `C (36%)`<br>**Accents:** `C++ (14%)` | **Doubletail Twin-Lobe**<br>*Sleek Torpedo* | ⭐ 0 stars<br>💤 *98d ago* |
+| [**surgical-arm-ros2**](https://github.com/connormmckelvey/surgical-arm-ros2) | 🐠 **Juvenile (Level 2)**<br>`21` commits | **Body:** `Python (96%)`<br>**Fins:** `Shell (3%)`<br>**Accents:** `PowerShell (1%)` | **Doubletail Twin-Lobe**<br>*Royal Crest* | ⭐ 0 stars<br>💤 *113d ago* |
+| [**TACTUS-Medical-Robotics-FRI-Project**](https://github.com/connormmckelvey/TACTUS-Medical-Robotics-FRI-Project) | 🐠 **Juvenile (Level 2)**<br>`29` commits | **Body:** `C (100%)`<br>**Fins:** `Tonal Shade`<br>**Accents:** `Iridescent Shimmer` | **Rosetail Petal-Fringe**<br>*Sleek Torpedo* | ⭐ 0 stars<br>💤 *186d ago* |
 <!-- FISH_TABLE_END -->
 
 ---
@@ -37,20 +41,30 @@ Every repository has its own living procedural Betta fish:
 
 ---
 
+## 🌿 Ecosystem Features & Realism
+
+1. **Planted Nature Aquascape**: Multi-layered swaying kelp and foreground dwarf hairgrass stalks anchored to a textured riverbed sand and pebble substrate, with shimmering surface light caustics.
+2. **GitHub Stars & Recent Activity Aura**: Repos with stars earn diamond scale sparkles, while repos committed to in the last 48 hours emit subtle rising code bubble puffs.
+3. **Biological Station Hover**: Relaxed silky body undulation, 4x rapid pectoral fin flutter for delicate station stabilization, and natural periodic eye blinks.
+4. **Dual GitHub Dark & Light Mode**: GitHub automatically serves `assets/aquarium_dark.gif` (Midnight Abyss) or `assets/aquarium_light.gif` (Sunlit Lagoon) matching your GitHub theme via native `<picture>` media queries.
+
+---
+
 ## 🔄 Automatic GitHub Actions Updates & Anti-Crowding
 
 This repository includes [`.github/workflows/aquarium.yml`](.github/workflows/aquarium.yml) which automatically manages your tank:
-1. **Activity Deadline (`--deadline-days 60`)**: Repositories without a commit in the last 60 days automatically retire from the tank so it never gets stale.
-2. **Tank Capacity Limit (`--max-fish 4`)**: Caps the maximum number of fish (e.g. 3 to 5) so the tank stays spacious and tranquil with zero overcrowding.
+1. **Activity Deadline (`--deadline-days 365`)**: Repositories without a commit in the last 365 days (1 year) automatically retire from the tank so it stays fresh without stale projects.
+2. **Tank Capacity Limit (`--max-fish 6`)**: Caps the maximum number of fish (expanded spacious $640 \times 360$ tank) so every fish has open swimming territory.
 3. **Weekly Scheduled Sweep (`cron: '0 0 * * 0'`)**: Automatically runs weekly so old projects drop out when their deadline expires even if you haven't committed.
 4. **Instant Push Updates**: Whenever you push code, the corresponding fish grows in real time.
 
-You can customize the deadline in `.github/workflows/aquarium.yml`:
+You can customize parameters in `.github/workflows/aquarium.yml`:
 ```yaml
 python scripts/update_aquarium.py \
   --user "${{ github.repository_owner }}" \
-  --deadline-days 60 \
-  --max-fish 4 \
+  --deadline-days 365 \
+  --max-fish 6 \
+  --mode stream \
   --out assets/aquarium.gif
 ```
 

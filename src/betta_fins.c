@@ -9,8 +9,9 @@
 
 BettaFinConfig betta_fin_default_config(void) {
     BettaFinConfig cfg;
-    cfg.flow_phase    = 0.0f;
-    cfg.fin_scale     = 1.0f;
+    cfg.flow_phase     = 0.0f;
+    cfg.pectoral_phase = 0.0f;
+    cfg.fin_scale      = 1.0f;
     cfg.show_caudal   = 1;
     cfg.show_dorsal   = 1;
     cfg.show_anal     = 1;
@@ -414,9 +415,10 @@ void render_betta_fins_fg(PixelGrid* g, const BettaBodyConfig* body_cfg, const B
         int x0 = body_cfg->center_x - 13;
         int y0 = betta_get_spine_y(body_cfg, x0);
 
-        /* Bettas flutter pectorals gently for stabilization */
-        float flap = sinf(fin_cfg->flow_phase * 2.0f);
-        int flap_dx = (int)roundf(flap * 1.3f);
+        /* Bettas flutter delicate pectorals rapidly for station hovering */
+        float p_phase = (fin_cfg->pectoral_phase != 0.0f) ? fin_cfg->pectoral_phase : (fin_cfg->flow_phase * 2.5f);
+        float flap = sinf(p_phase);
+        int flap_dx = (int)roundf(flap * 1.6f);
 
         int max_w = (int)roundf(fin_cfg->traits.pectoral_width);
         int max_h = (int)roundf(fin_cfg->traits.pectoral_height);

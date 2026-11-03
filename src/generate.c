@@ -40,6 +40,9 @@ GenerateArgs default_generate_args(void) {
     a.fish_themes    = NULL;
     a.fish_commits   = NULL;
     a.fish_languages = NULL;
+    a.fish_stars     = NULL;
+    a.fish_recent    = NULL;
+    a.lighting_theme = "dark";
     return a;
 }
 

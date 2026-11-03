@@ -60,6 +60,12 @@ int main(int argc, char** argv) {
             args.fish_commits = argv[++i];
         } else if (strcmp(argv[i], "--fish-languages") == 0 && i + 1 < argc) {
             args.fish_languages = argv[++i];
+        } else if (strcmp(argv[i], "--fish-stars") == 0 && i + 1 < argc) {
+            args.fish_stars = argv[++i];
+        } else if (strcmp(argv[i], "--fish-recent") == 0 && i + 1 < argc) {
+            args.fish_recent = argv[++i];
+        } else if ((strcmp(argv[i], "--lighting") == 0 || strcmp(argv[i], "--theme-mode") == 0) && i + 1 < argc) {
+            args.lighting_theme = argv[++i];
         } else if (strcmp(argv[i], "--seeds") == 0 && i + 1 < argc) {
             args.fish_seeds = argv[++i];
         } else if (strcmp(argv[i], "--themes") == 0 && i + 1 < argc) {

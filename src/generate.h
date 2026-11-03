@@ -41,6 +41,9 @@ typedef struct {
     const char* fish_themes;      /* Comma-separated themes or NULL */
     const char* fish_commits;     /* Comma-separated commit counts for aquarium */
     const char* fish_languages;   /* Semicolon-separated language specs for aquarium */
+    const char* fish_stars;       /* Comma-separated star counts for aquarium */
+    const char* fish_recent;      /* Comma-separated recent commit flags (1 for <48h) */
+    const char* lighting_theme;   /* "dark" (midnight abyss, default) or "light" (sunlit lagoon) */
 } GenerateArgs;
 
 /* Return default configuration args */
