@@ -1,11 +1,7 @@
 # 🐟 git-pet
 
 <div align="center">
-  <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="assets/aquarium_dark.gif">
-    <source media="(prefers-color-scheme: light)" srcset="assets/aquarium_light.gif">
-    <img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />
-  </picture>
+  <img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />
   <p><strong>A living, procedural pixel-art Betta aquarium that grows with every GitHub commit.</strong></p>
 </div>
 
@@ -14,7 +10,7 @@
 
 | Repository | Growth Stage & Commits | Languages & Color Ramps | Phenotype & Finnage | Stars & Activity |
 | :--- | :--- | :--- | :--- | :--- |
-| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🐠 **Juvenile (Level 2)**<br>`12` commits | **Body:** `C (90%)`<br>**Fins:** `Python (10%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | ⭐ 0 stars<br>🫧 **Active (<48h)** |
+| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | 🐠 **Juvenile (Level 2)**<br>`13` commits | **Body:** `C (90%)`<br>**Fins:** `Python (10%)`<br>**Accents:** `Makefile (1%)` | **Crowntail Spikes**<br>*Compact Chubby* | ⭐ 0 stars<br>🫧 **Active (<48h)** |
 | [**portfolio**](https://github.com/connormmckelvey/portfolio) | 🐟 **Mature Adult (Level 3)**<br>`101` commits | **Body:** `HTML (42%)`<br>**Fins:** `JavaScript (34%)`<br>**Accents:** `CSS (24%)` | **Veiltail Cascade**<br>*Compact Chubby* | ⭐ 0 stars<br>💤 *5d ago* |
 | [**Haplink**](https://github.com/connormmckelvey/Haplink) | 🐠 **Juvenile (Level 2)**<br>`40` commits | **Body:** `Python (79%)`<br>**Fins:** `C++ (18%)`<br>**Accents:** `C (3%)` | **Plakat Fighter Blade**<br>*Agile Predator* | ⭐ 5 stars<br>💤 *29d ago* |
 | [**surgical-cleaning-robot**](https://github.com/connormmckelvey/surgical-cleaning-robot) | 🍼 **Baby Fry (Level 1)**<br>`5` commits | **Body:** `Python (39%)`<br>**Fins:** `C (36%)`<br>**Accents:** `C++ (14%)` | **Doubletail Twin-Lobe**<br>*Sleek Torpedo* | ⭐ 0 stars<br>💤 *98d ago* |
@@ -41,12 +37,11 @@ Every repository has its own living procedural Betta fish:
 
 ---
 
-## 🌿 Ecosystem Features & Realism
+## 🌿 Biological Realism & GitHub Community Aura
 
-1. **Planted Nature Aquascape**: Multi-layered swaying kelp and foreground dwarf hairgrass stalks anchored to a textured riverbed sand and pebble substrate, with shimmering surface light caustics.
-2. **GitHub Stars & Recent Activity Aura**: Repos with stars earn diamond scale sparkles, while repos committed to in the last 48 hours emit subtle rising code bubble puffs.
-3. **Biological Station Hover**: Relaxed silky body undulation, 4x rapid pectoral fin flutter for delicate station stabilization, and natural periodic eye blinks.
-4. **Dual GitHub Dark & Light Mode**: GitHub automatically serves `assets/aquarium_dark.gif` (Midnight Abyss) or `assets/aquarium_light.gif` (Sunlit Lagoon) matching your GitHub theme via native `<picture>` media queries.
+1. **GitHub Stars & Recent Activity Aura**: Repos with stars earn diamond scale sparkles on their flank, while repos committed to in the last 48 hours emit subtle rising code bubble puffs.
+2. **Biological Station Hover**: Relaxed silky body undulation, 4x rapid pectoral fin flutter for delicate station stabilization (anchored cleanly on the flank behind the gill slit), and natural periodic eye blinks.
+3. **Deep Ocean Midnight Abyss**: Serene atmospheric dark water gradient with ambient floating micro-bubbles.
 
 ---
 

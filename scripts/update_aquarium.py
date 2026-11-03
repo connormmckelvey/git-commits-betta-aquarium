@@ -4,14 +4,14 @@ git-pet Aquarium Orchestrator
 Fetches active repositories from GitHub, filters out inactive/old repositories
 based on a configurable deadline (in days), and generates a multi-fish aquarium
 sized so the tank is never overcrowded.
-Supports dual dark/light mode rendering, star glitter, and recent activity auras.
+Features biological realism (fluttering pectorals & eye blinks) and GitHub community
+status (scale star sparkles & recent commit bubble puffs).
 """
 
 import os
 import sys
 import json
 import re
-import shutil
 import argparse
 import subprocess
 from datetime import datetime, timezone
@@ -118,25 +118,18 @@ def parse_lang_slots(lang_str):
     return body, fins, accent
 
 def update_readme_content(readme_path, fish_rows):
-    """Update the live aquarium <picture> tag and fish roster table in README.md."""
+    """Update the live aquarium image tag and fish roster table in README.md."""
     if not os.path.isfile(readme_path):
         return
 
     with open(readme_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # 1. Ensure GitHub Light/Dark Mode <picture> tag is active
-    picture_block = (
-        '<picture>\n'
-        '    <source media="(prefers-color-scheme: dark)" srcset="assets/aquarium_dark.gif">\n'
-        '    <source media="(prefers-color-scheme: light)" srcset="assets/aquarium_light.gif">\n'
-        '    <img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />\n'
-        '  </picture>'
-    )
+    # 1. Clean header image: single dark aquarium GIF
+    img_tag = '<img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />'
 
-    # Replace legacy <img src="assets/aquarium.gif" ... /> if not already using <picture>
-    if "<picture>" not in content:
-        content = re.sub(r'<img\s+src="assets/aquarium\.gif"[^>]*>', picture_block, content)
+    # If <picture>...</picture> block is present, replace with clean img tag
+    content = re.sub(r'<picture>.*?</picture>', img_tag, content, flags=re.DOTALL)
 
     # 2. Build live fish roster table
     table_header = (
@@ -176,7 +169,7 @@ def update_readme_content(readme_path, fish_rows):
     with open(readme_path, "w", encoding="utf-8") as f:
         f.write(updated_content)
 
-    print(f"Updated live fish roster and dual-mode <picture> in {readme_path}")
+    print(f"Updated live fish roster in {readme_path}")
 
 def find_binary(explicit_path=None):
     """Locate the git-betta binary across platforms."""
@@ -210,7 +203,7 @@ def main():
                         help="Aquarium style: 'stream' (zen calm hover, default) or 'cross' (slow leisurely cruise)")
     parser.add_argument("--tank-width", type=int, default=320, help="Tank simulation width (default: 320)")
     parser.add_argument("--tank-height", type=int, default=180, help="Tank simulation height (default: 180)")
-    parser.add_argument("--out", default="assets/aquarium.gif", help="Output fallback aquarium GIF path")
+    parser.add_argument("--out", default="assets/aquarium.gif", help="Output aquarium GIF path")
     parser.add_argument("--readme", default="README.md", help="Path to README.md to update with fish table (or empty to disable)")
     parser.add_argument("--token", help="GitHub token (defaults to GITHUB_TOKEN env var)")
     parser.add_argument("--binary", help="Path to git-betta binary")
@@ -237,7 +230,7 @@ def main():
     print(f"============================================================")
     print(f"  🐟 git-pet Aquarium Manager for @{user}")
     print(f"  Activity Deadline: Repos active within last {args.deadline_days} days")
-    print(f"  Tank Capacity Limit: Max {args.max_fish} fish (Prevents overcrowding)")
+    print(f"  Tank Capacity Limit: Max {args.max_fish} fish (Spacious & Tranquil)")
     print(f"============================================================")
 
     repos_url = f"https://api.github.com/users/{user}/repos?sort=pushed&direction=desc&per_page=100"
@@ -342,19 +335,14 @@ def main():
         status_str = "Active <48h" if is_recent else "Idle"
         print(f"  • {full_name:28s} | {commits:5d} commits | {stars:2d} stars | {status_str} | Languages: {langs}")
 
-    assets_dir = os.path.dirname(os.path.abspath(args.out))
-    os.makedirs(assets_dir, exist_ok=True)
-
-    out_dark = os.path.join(assets_dir, "aquarium_dark.gif")
-    out_light = os.path.join(assets_dir, "aquarium_light.gif")
-    out_fallback = os.path.abspath(args.out)
+    os.makedirs(os.path.dirname(os.path.abspath(args.out)), exist_ok=True)
 
     binary = find_binary(args.binary)
     if not binary and not args.dry_run:
         print(f"\nError: Could not locate git-betta binary. Build it with 'make' or gcc first.", file=sys.stderr)
         sys.exit(2)
 
-    base_cmd = [
+    cmd = [
         binary or "__BINARY__",
         "--aquarium",
         "--stream" if args.mode == "stream" else "--cross",
@@ -368,46 +356,29 @@ def main():
         "--fps", str(args.fps),
         "--scale", "2",
         "--tank-width", str(args.tank_width),
-        "--tank-height", str(args.tank_height)
+        "--tank-height", str(args.tank_height),
+        "--out", args.out
     ]
 
     if args.dry_run:
         print("\n[Dry Run] Base command:")
-        print(" ".join(base_cmd))
+        print(" ".join(cmd))
         return
 
-    # 1. Render Dark Mode GIF
-    print(f"\nRendering Midnight Abyss (Dark Mode) Aquarium GIF...")
-    cmd_dark = list(base_cmd) + ["--lighting", "dark", "--out", out_dark]
-    res_dark = subprocess.run(cmd_dark, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    if res_dark.stdout:
-        print(res_dark.stdout)
+    print(f"\nRendering Midnight Abyss Aquarium GIF...")
+    res = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    if res.stdout:
+        print(res.stdout)
 
-    if res_dark.returncode != 0:
-        print(f"\nError: git-betta failed rendering dark mode (code {res_dark.returncode})", file=sys.stderr)
-        sys.exit(res_dark.returncode)
+    if res.returncode != 0:
+        print(f"\nError: git-betta failed rendering aquarium (code {res.returncode})", file=sys.stderr)
+        sys.exit(res.returncode)
 
-    # 2. Render Light Mode GIF
-    print(f"\nRendering Sunlit Lagoon (Light Mode) Aquarium GIF...")
-    cmd_light = list(base_cmd) + ["--lighting", "light", "--out", out_light]
-    res_light = subprocess.run(cmd_light, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
-    if res_light.stdout:
-        print(res_light.stdout)
-
-    if res_light.returncode != 0:
-        print(f"\nError: git-betta failed rendering light mode (code {res_light.returncode})", file=sys.stderr)
-        sys.exit(res_light.returncode)
-
-    # 3. Create Fallback GIF
-    shutil.copyfile(out_dark, out_fallback)
-    print(f"\nSuccessfully generated dual-theme aquarium:")
-    print(f"  • Dark Mode:  {out_dark}")
-    print(f"  • Light Mode: {out_light}")
-    print(f"  • Fallback:   {out_fallback}")
+    print(f"\nSuccessfully generated aquarium GIF: {args.out}")
 
     # Parse stdout for fish traits and phenotypes
     fish_data_by_repo = {}
-    for line in res_dark.stdout.splitlines():
+    for line in res.stdout.splitlines():
         m = re.search(r'Fish #\d+:\s+Repo\s+"([^"]+)"\s+\[(\d+)\s+commits\s+-\s+([^|]+)\|\s+(\d+)\s+stars\s+\|\s+([^\]]+)\]\s+\|\s+([^|]+)\|\s+(.*)', line)
         if m:
             r_seed, r_c, r_st, r_stars, r_recent, r_fin, r_arch = m.groups()

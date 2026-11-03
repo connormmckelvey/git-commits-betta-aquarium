@@ -412,13 +412,16 @@ void render_betta_fins_fg(PixelGrid* g, const BettaBodyConfig* body_cfg, const B
 
     /* 5. Pectoral Fin with Active Flapping Kinematics */
     if (fin_cfg->show_pectoral) {
-        int x0 = body_cfg->center_x - 13;
-        int y0 = betta_get_spine_y(body_cfg, x0);
+        /* Anchor pectoral fin realistically on the flank behind the eye and gill plate */
+        int len = body_cfg->length;
+        int x_start = body_cfg->center_x - len / 2;
+        int x0 = x_start + (int)roundf((float)len * 0.38f);
+        int y0 = betta_get_spine_y(body_cfg, x0) + 1;
 
         /* Bettas flutter delicate pectorals rapidly for station hovering */
         float p_phase = (fin_cfg->pectoral_phase != 0.0f) ? fin_cfg->pectoral_phase : (fin_cfg->flow_phase * 2.5f);
         float flap = sinf(p_phase);
-        int flap_dx = (int)roundf(flap * 1.6f);
+        int flap_dx = (int)roundf(flap * 1.5f);
 
         int max_w = (int)roundf(fin_cfg->traits.pectoral_width);
         int max_h = (int)roundf(fin_cfg->traits.pectoral_height);
