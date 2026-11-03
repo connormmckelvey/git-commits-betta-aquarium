@@ -1,0 +1,9 @@
+# Binaries and build artifacts
+dist/
+*.exe
+*.o
+*.obj
+
+# OS metadata
+.DS_Store
+Thumbs.db

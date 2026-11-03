@@ -1,0 +1,57 @@
+name: Update Aquarium
+
+on:
+  push:
+    branches: [ main, master ]
+    paths-ignore:
+      - 'assets/**'
+      - 'README.md'
+  schedule:
+    # Refresh weekly so dormant repos automatically retire when deadline passes
+    - cron: '0 0 * * 0'
+  workflow_dispatch: # Allows manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write
+
+jobs:
+  aquarium-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository (Full History)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Compile Procedural Engine
+        run: |
+          # Pure C99 with zero external dependencies (builds in ~0.5s)
+          gcc -O2 src/*.c -o git-betta -lm
+
+      - name: Update Aquarium (Activity Deadline & Anti-Crowding)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p assets
+          # Configurable parameters:
+          #   --deadline-days 60 : Only show repos active within last 60 days
+          #   --max-fish 4       : Max capacity limit to prevent tank overcrowding
+          python scripts/update_aquarium.py \
+            --user "${{ github.repository_owner }}" \
+            --current-repo "${{ github.repository }}" \
+            --deadline-days 60 \
+            --max-fish 4 \
+            --out assets/aquarium.gif
+
+      - name: Commit & Push Updated Aquarium
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add assets/aquarium.gif
+          git diff --staged --quiet || (git commit -m "chore: update aquarium with active repos [skip ci]" && git push)
