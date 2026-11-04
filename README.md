@@ -10,7 +10,7 @@
 
 | Repository | Fish Colors & Appearance | Level & Stage | Finnage Style | Activity |
 | :--- | :--- | :--- | :--- | :--- |
-| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | **Slate Grey body, Ocean Blue fins**<br><sub>C 90% · Python 10% · Active Bubble Puff</sub> | <kbd>Level 2</kbd> Juvenile<br><code>17 commits</code> | Crowntail Spikes<br><sub>Compact Chubby</sub> | Active (<48h) |
+| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | **Slate Grey body, Ocean Blue fins**<br><sub>C 90% · Python 10% · Active Bubble Puff</sub> | <kbd>Level 2</kbd> Juvenile<br><code>18 commits</code> | Crowntail Spikes<br><sub>Compact Chubby</sub> | Active (<48h) |
 | [**portfolio**](https://github.com/connormmckelvey/portfolio) | **Flame Red body, Canary Gold fins**<br><sub>HTML 42% · JavaScript 34%</sub> | <kbd>Level 3</kbd> Mature Adult<br><code>101 commits</code> | Veiltail Cascade<br><sub>Compact Chubby</sub> | Idle (6d ago) |
 | [**Haplink**](https://github.com/connormmckelvey/Haplink) | **Ocean Blue body, Magenta Pink fins**<br><sub>Python 79% · C++ 18% · 5 Star Sparkles</sub> | <kbd>Level 2</kbd> Juvenile<br><code>40 commits</code> | Plakat Fighter Blade<br><sub>Agile Predator</sub> | Idle (30d ago) · 5 stars |
 | [**surgical-cleaning-robot**](https://github.com/connormmckelvey/surgical-cleaning-robot) | **Ocean Blue body, Slate Grey fins**<br><sub>Python 39% · C 36% · Small Fry</sub> | <kbd>Level 1</kbd> Baby Fry<br><code>5 commits</code> | Doubletail Twin-Lobe<br><sub>Sleek Torpedo</sub> | Idle (99d ago) |
