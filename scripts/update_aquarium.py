@@ -104,6 +104,29 @@ def get_stage_icon(stage_str):
         return "🐉"
     return "🐟"
 
+def format_level_badge(stage_str, icon):
+    m = re.search(r'Level\s*(\d+)', stage_str)
+    lvl_num = m.group(1) if m else "1"
+    clean_stage = re.sub(r'\s*\(Level\s*\d+\)', '', stage_str).strip()
+    return f"<kbd>Lv. {lvl_num}</kbd> {icon} <b>{clean_stage}</b>"
+
+def format_languages_pill(raw_lang_str):
+    parts = [p.strip() for p in raw_lang_str.split(",") if p.strip()]
+    if not parts:
+        return "<code>C</code> 100%"
+    formatted = []
+    for p in parts[:2]:
+        if ":" in p:
+            k, v = p.split(":", 1)
+            formatted.append(f"<code>{k}</code> {v}%")
+        else:
+            formatted.append(f"<code>{p}</code>")
+    res = " · ".join(formatted)
+    if len(parts) > 2:
+        k, v = parts[2].split(":", 1) if ":" in parts[2] else (parts[2], "")
+        res += f"<br><sub><code>{k}</code> {v}%</sub>" if v else f"<br><sub><code>{k}</code></sub>"
+    return res
+
 def parse_lang_slots(lang_str):
     """Split comma string like 'C:94,Python:6,Makefile:1' into body, fins, and accent descriptions."""
     parts = [p.strip() for p in lang_str.split(",") if p.strip()]
@@ -127,29 +150,30 @@ def update_readme_content(readme_path, fish_rows):
 
     # 1. Clean header image: single dark aquarium GIF
     img_tag = '<img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />'
-
-    # If <picture>...</picture> block is present, replace with clean img tag
     content = re.sub(r'<picture>.*?</picture>', img_tag, content, flags=re.DOTALL)
 
-    # 2. Build live fish roster table
+    # 2. Build live fish roster table with clean semantic HTML levels
     table_header = (
         "<!-- FISH_TABLE_START -->\n"
         "### 🐠 Swimming in the Aquarium\n\n"
-        "| Repository | Growth Stage & Commits | Languages & Color Ramps | Phenotype & Finnage | Stars & Activity |\n"
+        "| Repository | Level & Stage | Languages & Palette | Phenotype | Stars & Activity |\n"
         "| :--- | :--- | :--- | :--- | :--- |\n"
     )
 
     rows_md = []
     for f in fish_rows:
-        activity_badge = "🫧 **Active (<48h)**" if f["is_recent"] else f"💤 *{f['last_active']}*"
-        stars_badge = f"⭐ {f['stars']} star{'s' if f['stars'] != 1 else ''}"
+        level_badge = format_level_badge(f["stage"], f["icon"])
+        lang_badge = format_languages_pill(f.get("lang_raw", f["body_lang"]))
+        phenotype_badge = f"<b>{f['fin_style']}</b><br><sub>{f['archetype']}</sub>"
+        activity_badge = "🫧 <b>Active (<48h)</b>" if f["is_recent"] else f"💤 <i>{f['last_active']}</i>"
+        status_badge = f"⭐ {f['stars']} · {activity_badge}"
 
         rows_md.append(
             f"| [**{f['name']}**]({f['url']}) "
-            f"| {f['icon']} **{f['stage']}**<br>`{f['commits']:,}` commits "
-            f"| **Body:** `{f['body_lang']}`<br>**Fins:** `{f['fin_lang']}`<br>**Accents:** `{f['accent_lang']}` "
-            f"| **{f['fin_style']}**<br>*{f['archetype']}* "
-            f"| {stars_badge}<br>{activity_badge} |"
+            f"| {level_badge}<br><code>{f['commits']:,} commits</code> "
+            f"| {lang_badge} "
+            f"| {phenotype_badge} "
+            f"| {status_badge} |"
         )
 
     table_body = "\n".join(rows_md) + "\n<!-- FISH_TABLE_END -->"
@@ -426,6 +450,7 @@ def main():
             "body_lang": b_lang,
             "fin_lang": f_lang,
             "accent_lang": a_lang,
+            "lang_raw": lang_raw,
             "fin_style": fin_name,
             "archetype": arch_name,
             "last_active": age_str
