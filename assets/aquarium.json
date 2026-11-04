@@ -1,0 +1,250 @@
+{
+  "updated_at": "2026-11-04T17:56:11.386551+00:00",
+  "tank": {
+    "width": 640,
+    "height": 360,
+    "mode": "stream",
+    "fps": 10,
+    "frames": 60,
+    "population": 6,
+    "deadline_days": 365,
+    "max_capacity": 6,
+    "gif_url": "assets/aquarium.gif"
+  },
+  "fish": [
+    {
+      "name": "git-commits-betta-aquarium",
+      "full_name": "connormmckelvey/git-commits-betta-aquarium",
+      "repo_url": "https://github.com/connormmckelvey/git-commits-betta-aquarium",
+      "level": 2,
+      "stage": "Juvenile",
+      "commits": 19,
+      "stars": 0,
+      "is_recent": true,
+      "last_active": "Today",
+      "appearance": "Slate Grey body, Ocean Blue fins (C 90% \u00b7 Python 10% \u00b7 Active Bubble Puff)",
+      "colors": {
+        "primary": {
+          "role": "body_scales",
+          "language": "C",
+          "percentage": 90,
+          "color_name": "Slate Grey",
+          "hex": "#555555"
+        },
+        "secondary": {
+          "role": "fins_and_veil",
+          "language": "Python",
+          "percentage": 10,
+          "color_name": "Ocean Blue",
+          "hex": "#3572A5"
+        },
+        "accent": {
+          "role": "streamers_and_iridescence",
+          "language": "Makefile",
+          "percentage": 1,
+          "color_name": "Charcoal",
+          "hex": "#555555"
+        }
+      },
+      "phenotype": {
+        "fin_style": "Crowntail Spikes",
+        "archetype": "Compact Chubby"
+      }
+    },
+    {
+      "name": "portfolio",
+      "full_name": "connormmckelvey/portfolio",
+      "repo_url": "https://github.com/connormmckelvey/portfolio",
+      "level": 3,
+      "stage": "Mature Adult",
+      "commits": 101,
+      "stars": 0,
+      "is_recent": false,
+      "last_active": "6d ago",
+      "appearance": "Flame Red body, Canary Gold fins (HTML 42% \u00b7 JavaScript 34%)",
+      "colors": {
+        "primary": {
+          "role": "body_scales",
+          "language": "HTML",
+          "percentage": 42,
+          "color_name": "Flame Red",
+          "hex": "#E34C26"
+        },
+        "secondary": {
+          "role": "fins_and_veil",
+          "language": "JavaScript",
+          "percentage": 34,
+          "color_name": "Canary Gold",
+          "hex": "#F1E05A"
+        },
+        "accent": {
+          "role": "streamers_and_iridescence",
+          "language": "CSS",
+          "percentage": 24,
+          "color_name": "Royal Violet",
+          "hex": "#563D7C"
+        }
+      },
+      "phenotype": {
+        "fin_style": "Veiltail Cascade",
+        "archetype": "Compact Chubby"
+      }
+    },
+    {
+      "name": "Haplink",
+      "full_name": "connormmckelvey/Haplink",
+      "repo_url": "https://github.com/connormmckelvey/Haplink",
+      "level": 2,
+      "stage": "Juvenile",
+      "commits": 40,
+      "stars": 5,
+      "is_recent": false,
+      "last_active": "30d ago",
+      "appearance": "Ocean Blue body, Magenta Pink fins (Python 79% \u00b7 C++ 18% \u00b7 5 Star Sparkles)",
+      "colors": {
+        "primary": {
+          "role": "body_scales",
+          "language": "Python",
+          "percentage": 79,
+          "color_name": "Ocean Blue",
+          "hex": "#3572A5"
+        },
+        "secondary": {
+          "role": "fins_and_veil",
+          "language": "C++",
+          "percentage": 18,
+          "color_name": "Magenta Pink",
+          "hex": "#F34B7D"
+        },
+        "accent": {
+          "role": "streamers_and_iridescence",
+          "language": "C",
+          "percentage": 3,
+          "color_name": "Slate Grey",
+          "hex": "#555555"
+        }
+      },
+      "phenotype": {
+        "fin_style": "Plakat Fighter Blade",
+        "archetype": "Agile Predator"
+      }
+    },
+    {
+      "name": "surgical-cleaning-robot",
+      "full_name": "connormmckelvey/surgical-cleaning-robot",
+      "repo_url": "https://github.com/connormmckelvey/surgical-cleaning-robot",
+      "level": 1,
+      "stage": "Baby Fry",
+      "commits": 5,
+      "stars": 0,
+      "is_recent": false,
+      "last_active": "99d ago",
+      "appearance": "Ocean Blue body, Slate Grey fins (Python 39% \u00b7 C 36% \u00b7 Small Fry)",
+      "colors": {
+        "primary": {
+          "role": "body_scales",
+          "language": "Python",
+          "percentage": 39,
+          "color_name": "Ocean Blue",
+          "hex": "#3572A5"
+        },
+        "secondary": {
+          "role": "fins_and_veil",
+          "language": "C",
+          "percentage": 36,
+          "color_name": "Slate Grey",
+          "hex": "#555555"
+        },
+        "accent": {
+          "role": "streamers_and_iridescence",
+          "language": "C++",
+          "percentage": 14,
+          "color_name": "Magenta Pink",
+          "hex": "#F34B7D"
+        }
+      },
+      "phenotype": {
+        "fin_style": "Doubletail Twin-Lobe",
+        "archetype": "Sleek Torpedo"
+      }
+    },
+    {
+      "name": "surgical-arm-ros2",
+      "full_name": "connormmckelvey/surgical-arm-ros2",
+      "repo_url": "https://github.com/connormmckelvey/surgical-arm-ros2",
+      "level": 2,
+      "stage": "Juvenile",
+      "commits": 21,
+      "stars": 0,
+      "is_recent": false,
+      "last_active": "114d ago",
+      "appearance": "Ocean Blue body, Lime Green fins (Python 96% \u00b7 Shell 3%)",
+      "colors": {
+        "primary": {
+          "role": "body_scales",
+          "language": "Python",
+          "percentage": 96,
+          "color_name": "Ocean Blue",
+          "hex": "#3572A5"
+        },
+        "secondary": {
+          "role": "fins_and_veil",
+          "language": "Shell",
+          "percentage": 3,
+          "color_name": "Lime Green",
+          "hex": "#89E051"
+        },
+        "accent": {
+          "role": "streamers_and_iridescence",
+          "language": "PowerShell",
+          "percentage": 1,
+          "color_name": "Navy Blue",
+          "hex": "#012456"
+        }
+      },
+      "phenotype": {
+        "fin_style": "Doubletail Twin-Lobe",
+        "archetype": "Royal Crest"
+      }
+    },
+    {
+      "name": "TACTUS-Medical-Robotics-FRI-Project",
+      "full_name": "connormmckelvey/TACTUS-Medical-Robotics-FRI-Project",
+      "repo_url": "https://github.com/connormmckelvey/TACTUS-Medical-Robotics-FRI-Project",
+      "level": 2,
+      "stage": "Juvenile",
+      "commits": 29,
+      "stars": 0,
+      "is_recent": false,
+      "last_active": "186d ago",
+      "appearance": "Flame Red body, Ocean Blue fins (HTML 51% \u00b7 Python 32%)",
+      "colors": {
+        "primary": {
+          "role": "body_scales",
+          "language": "HTML",
+          "percentage": 51,
+          "color_name": "Flame Red",
+          "hex": "#E34C26"
+        },
+        "secondary": {
+          "role": "fins_and_veil",
+          "language": "Python",
+          "percentage": 32,
+          "color_name": "Ocean Blue",
+          "hex": "#3572A5"
+        },
+        "accent": {
+          "role": "streamers_and_iridescence",
+          "language": "C++",
+          "percentage": 17,
+          "color_name": "Magenta Pink",
+          "hex": "#F34B7D"
+        }
+      },
+      "phenotype": {
+        "fin_style": "Rosetail Petal-Fringe",
+        "archetype": "Sleek Torpedo"
+      }
+    }
+  ]
+}

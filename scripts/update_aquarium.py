@@ -4,7 +4,7 @@ git-pet Aquarium Orchestrator
 Fetches active repositories from GitHub, filters out inactive/old repositories
 based on a configurable deadline (in days), and generates a multi-fish aquarium
 sized so the tank is never overcrowded.
-Identifies each fish by its procedural color scheme, growth level, and community status.
+Exports both the animated GIF and structured JSON data for websites and dashboards.
 """
 
 import os
@@ -67,11 +67,59 @@ LANGUAGE_COLOR_NAMES = {
     "solidity": "Silver"
 }
 
+LANGUAGE_HEX_COLORS = {
+    "c": "#555555",
+    "c++": "#F34B7D",
+    "cpp": "#F34B7D",
+    "c#": "#178600",
+    "csharp": "#178600",
+    "python": "#3572A5",
+    "py": "#3572A5",
+    "javascript": "#F1E05A",
+    "js": "#F1E05A",
+    "typescript": "#3178C6",
+    "ts": "#3178C6",
+    "rust": "#DEA584",
+    "go": "#00ADD8",
+    "golang": "#00ADD8",
+    "html": "#E34C26",
+    "css": "#563D7C",
+    "ruby": "#701516",
+    "java": "#B07219",
+    "php": "#4F5D95",
+    "swift": "#F05138",
+    "kotlin": "#A97BFF",
+    "kt": "#A97BFF",
+    "shell": "#89E051",
+    "bash": "#89E051",
+    "sh": "#89E051",
+    "powershell": "#012456",
+    "makefile": "#555555",
+    "lua": "#000080",
+    "dart": "#00B4AB",
+    "zig": "#EC915C",
+    "markdown": "#083FA1",
+    "md": "#083FA1",
+    "r": "#198CE7",
+    "scala": "#C22D26",
+    "elixir": "#6E4A7E",
+    "haskell": "#5E5086",
+    "clojure": "#DB5855",
+    "ocaml": "#EE6A1A",
+    "solidity": "#AAAAAA"
+}
+
 def get_color_name(lang):
     if not lang:
         return "Slate Grey"
     clean = lang.strip().lower()
     return LANGUAGE_COLOR_NAMES.get(clean, f"{lang} Tint")
+
+def get_language_hex(lang):
+    if not lang:
+        return "#555555"
+    clean = lang.strip().lower()
+    return LANGUAGE_HEX_COLORS.get(clean, "#3572A5")
 
 def get_fish_appearance(raw_lang_str, stage_str, stars, is_recent):
     """Generate human-readable color identification so users can spot the fish in the GIF."""
@@ -236,6 +284,101 @@ def update_readme_content(readme_path, fish_rows):
 
     print(f"Updated live fish roster in {readme_path}")
 
+def export_roster_json(json_path, args, user, fish_rows):
+    """Export structured fish roster and tank metadata to a clean JSON file for external websites."""
+    if not json_path:
+        return
+
+    os.makedirs(os.path.dirname(os.path.abspath(json_path)), exist_ok=True)
+    now_utc = datetime.now(timezone.utc).isoformat()
+
+    fish_list = []
+    for f in fish_rows:
+        m = re.search(r'Level\s*(\d+)', f.get("stage", ""))
+        lvl_num = int(m.group(1)) if m else 1
+        clean_stage = re.sub(r'\s*\(Level\s*\d+\)', '', f.get("stage", "")).strip()
+
+        lang_parts = [p.strip() for p in f.get("lang_raw", "").split(",") if p.strip()]
+        color_details = {}
+
+        if len(lang_parts) > 0:
+            p0 = lang_parts[0].split(":")
+            lang0 = p0[0].strip()
+            pct0 = int(float(p0[1])) if len(p0) > 1 else 100
+            color_details["primary"] = {
+                "role": "body_scales",
+                "language": lang0,
+                "percentage": pct0,
+                "color_name": get_color_name(lang0),
+                "hex": get_language_hex(lang0)
+            }
+
+        if len(lang_parts) > 1:
+            p1 = lang_parts[1].split(":")
+            lang1 = p1[0].strip()
+            pct1 = int(float(p1[1])) if len(p1) > 1 else 0
+            color_details["secondary"] = {
+                "role": "fins_and_veil",
+                "language": lang1,
+                "percentage": pct1,
+                "color_name": get_color_name(lang1),
+                "hex": get_language_hex(lang1)
+            }
+
+        if len(lang_parts) > 2:
+            p2 = lang_parts[2].split(":")
+            lang2 = p2[0].strip()
+            pct2 = int(float(p2[1])) if len(p2) > 1 else 0
+            color_details["accent"] = {
+                "role": "streamers_and_iridescence",
+                "language": lang2,
+                "percentage": pct2,
+                "color_name": get_color_name(lang2),
+                "hex": get_language_hex(lang2)
+            }
+
+        raw_desc = get_fish_appearance(f.get("lang_raw", ""), f["stage"], f["stars"], f["is_recent"])
+        clean_desc = raw_desc.replace("<br>", " ").replace("<sub>", "(").replace("</sub>", ")").replace("**", "")
+
+        fish_list.append({
+            "name": f["name"],
+            "full_name": f["full_name"],
+            "repo_url": f["url"],
+            "level": lvl_num,
+            "stage": clean_stage,
+            "commits": f["commits"],
+            "stars": f["stars"],
+            "is_recent": bool(f["is_recent"]),
+            "last_active": f["last_active"],
+            "appearance": clean_desc,
+            "colors": color_details,
+            "phenotype": {
+                "fin_style": f["fin_style"],
+                "archetype": f["archetype"]
+            }
+        })
+
+    data = {
+        "updated_at": now_utc,
+        "tank": {
+            "width": args.tank_width * 2,
+            "height": args.tank_height * 2,
+            "mode": args.mode,
+            "fps": args.fps,
+            "frames": args.frames,
+            "population": len(fish_list),
+            "deadline_days": args.deadline_days,
+            "max_capacity": args.max_fish,
+            "gif_url": args.out
+        },
+        "fish": fish_list
+    }
+
+    with open(json_path, "w", encoding="utf-8") as out_f:
+        json.dump(data, out_f, indent=2)
+
+    print(f"Exported live fish roster JSON to {json_path}")
+
 def find_binary(explicit_path=None):
     """Locate the git-betta binary across platforms."""
     candidates = [
@@ -269,6 +412,7 @@ def main():
     parser.add_argument("--tank-width", type=int, default=320, help="Tank simulation width (default: 320)")
     parser.add_argument("--tank-height", type=int, default=180, help="Tank simulation height (default: 180)")
     parser.add_argument("--out", default="assets/aquarium.gif", help="Output aquarium GIF path")
+    parser.add_argument("--json", default="assets/aquarium.json", help="Path to export structured fish data JSON (or empty to disable)")
     parser.add_argument("--readme", default="README.md", help="Path to README.md to update with fish table (or empty to disable)")
     parser.add_argument("--token", help="GitHub token (defaults to GITHUB_TOKEN env var)")
     parser.add_argument("--binary", help="Path to git-betta binary")
@@ -494,6 +638,9 @@ def main():
 
     if args.readme:
         update_readme_content(args.readme, fish_rows)
+
+    if args.json:
+        export_roster_json(args.json, args, user, fish_rows)
 
 if __name__ == "__main__":
     main()
