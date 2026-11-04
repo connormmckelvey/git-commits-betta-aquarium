@@ -18,7 +18,7 @@
 
 | Repository | Level & Stage | Languages & Palette | Phenotype | Stars & Activity |
 | :--- | :--- | :--- | :--- | :--- |
-| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | <kbd>Lv. 2</kbd> 🐠 <b>Juvenile</b><br><code>15 commits</code> | <code>C</code> 91% · <code>Python</code> 9%<br><sub><code>Makefile</code> 1%</sub> | <b>Crowntail Spikes</b><br><sub>Compact Chubby</sub> | ⭐ 0 · 🫧 <b>Active (<48h)</b> |
+| [**git-commits-betta-aquarium**](https://github.com/connormmckelvey/git-commits-betta-aquarium) | <kbd>Lv. 2</kbd> 🐠 <b>Juvenile</b><br><code>16 commits</code> | <code>C</code> 90% · <code>Python</code> 10%<br><sub><code>Makefile</code> 1%</sub> | <b>Crowntail Spikes</b><br><sub>Compact Chubby</sub> | ⭐ 0 · 🫧 <b>Active (<48h)</b> |
 | [**portfolio**](https://github.com/connormmckelvey/portfolio) | <kbd>Lv. 3</kbd> 🐟 <b>Mature Adult</b><br><code>101 commits</code> | <code>HTML</code> 42% · <code>JavaScript</code> 34%<br><sub><code>CSS</code> 24%</sub> | <b>Veiltail Cascade</b><br><sub>Compact Chubby</sub> | ⭐ 0 · 💤 <i>5d ago</i> |
 | [**Haplink**](https://github.com/connormmckelvey/Haplink) | <kbd>Lv. 2</kbd> 🐠 <b>Juvenile</b><br><code>40 commits</code> | <code>Python</code> 79% · <code>C++</code> 18%<br><sub><code>C</code> 3%</sub> | <b>Plakat Fighter Blade</b><br><sub>Agile Predator</sub> | ⭐ 5 · 💤 <i>29d ago</i> |
 | [**surgical-cleaning-robot**](https://github.com/connormmckelvey/surgical-cleaning-robot) | <kbd>Lv. 1</kbd> 🍼 <b>Baby Fry</b><br><code>5 commits</code> | <code>Python</code> 39% · <code>C</code> 36%<br><sub><code>C++</code> 14%</sub> | <b>Doubletail Twin-Lobe</b><br><sub>Sleek Torpedo</sub> | ⭐ 0 · 💤 <i>98d ago</i> |
