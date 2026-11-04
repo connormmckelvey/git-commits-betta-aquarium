@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-11-04T17:56:11.386551+00:00",
+  "updated_at": "2026-11-04T17:59:18.779108+00:00",
   "tank": {
     "width": 640,
     "height": 360,
@@ -18,23 +18,23 @@
       "repo_url": "https://github.com/connormmckelvey/git-commits-betta-aquarium",
       "level": 2,
       "stage": "Juvenile",
-      "commits": 19,
+      "commits": 20,
       "stars": 0,
       "is_recent": true,
       "last_active": "Today",
-      "appearance": "Slate Grey body, Ocean Blue fins (C 90% \u00b7 Python 10% \u00b7 Active Bubble Puff)",
+      "appearance": "Slate Grey body, Ocean Blue fins (C 87% \u00b7 Python 12% \u00b7 Active Bubble Puff)",
       "colors": {
         "primary": {
           "role": "body_scales",
           "language": "C",
-          "percentage": 90,
+          "percentage": 87,
           "color_name": "Slate Grey",
           "hex": "#555555"
         },
         "secondary": {
           "role": "fins_and_veil",
           "language": "Python",
-          "percentage": 10,
+          "percentage": 12,
           "color_name": "Ocean Blue",
           "hex": "#3572A5"
         },
