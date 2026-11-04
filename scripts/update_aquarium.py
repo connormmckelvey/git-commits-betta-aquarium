@@ -4,8 +4,7 @@ git-pet Aquarium Orchestrator
 Fetches active repositories from GitHub, filters out inactive/old repositories
 based on a configurable deadline (in days), and generates a multi-fish aquarium
 sized so the tank is never overcrowded.
-Features biological realism (fluttering pectorals & eye blinks) and GitHub community
-status (scale star sparkles & recent commit bubble puffs).
+Identifies each fish by its procedural color scheme, growth level, and community status.
 """
 
 import os
@@ -25,6 +24,91 @@ if hasattr(sys.stdout, "reconfigure"):
         sys.stderr.reconfigure(encoding="utf-8", errors="replace")
     except Exception:
         pass
+
+LANGUAGE_COLOR_NAMES = {
+    "c": "Slate Grey",
+    "c++": "Magenta Pink",
+    "cpp": "Magenta Pink",
+    "c#": "Forest Green",
+    "csharp": "Forest Green",
+    "python": "Ocean Blue",
+    "py": "Ocean Blue",
+    "javascript": "Canary Gold",
+    "js": "Canary Gold",
+    "typescript": "Sapphire Blue",
+    "ts": "Sapphire Blue",
+    "rust": "Terracotta Rust",
+    "go": "Cyan",
+    "golang": "Cyan",
+    "html": "Flame Red",
+    "css": "Royal Violet",
+    "ruby": "Ruby Crimson",
+    "java": "Amber Bronze",
+    "php": "Indigo",
+    "swift": "Sunset Orange",
+    "kotlin": "Electric Violet",
+    "kt": "Electric Violet",
+    "shell": "Lime Green",
+    "bash": "Lime Green",
+    "sh": "Lime Green",
+    "powershell": "Navy Blue",
+    "makefile": "Charcoal",
+    "lua": "Navy Blue",
+    "dart": "Teal",
+    "zig": "Peach",
+    "markdown": "Deep Ocean",
+    "md": "Deep Ocean",
+    "r": "Sky Blue",
+    "scala": "Crimson",
+    "elixir": "Purple",
+    "haskell": "Violet",
+    "clojure": "Coral",
+    "ocaml": "Bright Orange",
+    "solidity": "Silver"
+}
+
+def get_color_name(lang):
+    if not lang:
+        return "Slate Grey"
+    clean = lang.strip().lower()
+    return LANGUAGE_COLOR_NAMES.get(clean, f"{lang} Tint")
+
+def get_fish_appearance(raw_lang_str, stage_str, stars, is_recent):
+    """Generate human-readable color identification so users can spot the fish in the GIF."""
+    parts = [p.strip() for p in raw_lang_str.split(",") if p.strip()]
+    if not parts:
+        body_col = "Slate Grey"
+        fin_col = "Steel Blue"
+        pct_sub = "C 100%"
+    elif len(parts) == 1:
+        lang1 = parts[0].split(":")[0].strip()
+        body_col = get_color_name(lang1)
+        fin_col = "Matching"
+        pct_sub = parts[0].replace(":", " ") + "%" if ":" in parts[0] else parts[0]
+    else:
+        lang1 = parts[0].split(":")[0].strip()
+        lang2 = parts[1].split(":")[0].strip()
+        body_col = get_color_name(lang1)
+        fin_col = get_color_name(lang2)
+        p1 = parts[0].replace(":", " ") + "%" if ":" in parts[0] else parts[0]
+        p2 = parts[1].replace(":", " ") + "%" if ":" in parts[1] else parts[1]
+        pct_sub = f"{p1} · {p2}"
+
+    if fin_col == "Matching":
+        desc = f"**{body_col} body & fins**"
+    else:
+        desc = f"**{body_col} body, {fin_col} fins**"
+
+    traits = []
+    if "fry" in stage_str.lower() or "baby" in stage_str.lower():
+        traits.append("Small Fry")
+    if is_recent:
+        traits.append("Active Bubble Puff")
+    if stars > 0:
+        traits.append(f"{stars} Star Sparkle{'s' if stars > 1 else ''}")
+
+    extra_str = f" · {', '.join(traits)}" if traits else ""
+    return f"{desc}<br><sub>{pct_sub}{extra_str}</sub>"
 
 def fetch_json(url, token=None):
     headers = {
@@ -90,55 +174,11 @@ def format_time_ago(days):
     else:
         return f"{int(round(days))}d ago"
 
-def get_stage_icon(stage_str):
-    s = stage_str.lower()
-    if "fry" in s or "baby" in s:
-        return "🍼"
-    if "juvenile" in s:
-        return "🐠"
-    if "adult" in s:
-        return "🐟"
-    if "elder" in s:
-        return "👑"
-    if "leviathan" in s:
-        return "🐉"
-    return "🐟"
-
-def format_level_badge(stage_str, icon):
+def format_level_badge(stage_str):
     m = re.search(r'Level\s*(\d+)', stage_str)
     lvl_num = m.group(1) if m else "1"
     clean_stage = re.sub(r'\s*\(Level\s*\d+\)', '', stage_str).strip()
-    return f"<kbd>Lv. {lvl_num}</kbd> {icon} <b>{clean_stage}</b>"
-
-def format_languages_pill(raw_lang_str):
-    parts = [p.strip() for p in raw_lang_str.split(",") if p.strip()]
-    if not parts:
-        return "<code>C</code> 100%"
-    formatted = []
-    for p in parts[:2]:
-        if ":" in p:
-            k, v = p.split(":", 1)
-            formatted.append(f"<code>{k}</code> {v}%")
-        else:
-            formatted.append(f"<code>{p}</code>")
-    res = " · ".join(formatted)
-    if len(parts) > 2:
-        k, v = parts[2].split(":", 1) if ":" in parts[2] else (parts[2], "")
-        res += f"<br><sub><code>{k}</code> {v}%</sub>" if v else f"<br><sub><code>{k}</code></sub>"
-    return res
-
-def parse_lang_slots(lang_str):
-    """Split comma string like 'C:94,Python:6,Makefile:1' into body, fins, and accent descriptions."""
-    parts = [p.strip() for p in lang_str.split(",") if p.strip()]
-    def fmt(p):
-        if ":" in p:
-            k, v = p.split(":", 1)
-            return f"{k} ({v}%)"
-        return p
-    body = fmt(parts[0]) if len(parts) > 0 else "Primary Shade"
-    fins = fmt(parts[1]) if len(parts) > 1 else "Tonal Shade"
-    accent = fmt(parts[2]) if len(parts) > 2 else "Iridescent Shimmer"
-    return body, fins, accent
+    return f"<kbd>Level {lvl_num}</kbd> {clean_stage}"
 
 def update_readme_content(readme_path, fish_rows):
     """Update the live aquarium image tag and fish roster table in README.md."""
@@ -148,32 +188,33 @@ def update_readme_content(readme_path, fish_rows):
     with open(readme_path, "r", encoding="utf-8") as f:
         content = f.read()
 
-    # 1. Clean header image: single dark aquarium GIF
+    # 1. Clean header image
     img_tag = '<img src="assets/aquarium.gif" alt="Live Repository Aquarium" width="640" />'
     content = re.sub(r'<picture>.*?</picture>', img_tag, content, flags=re.DOTALL)
 
-    # 2. Build live fish roster table with clean semantic HTML levels
+    # 2. Build live fish roster table with visual appearance identification and zero emojis
     table_header = (
         "<!-- FISH_TABLE_START -->\n"
-        "### 🐠 Swimming in the Aquarium\n\n"
-        "| Repository | Level & Stage | Languages & Palette | Phenotype | Stars & Activity |\n"
+        "### Aquarium Roster\n\n"
+        "| Repository | Fish Colors & Appearance | Level & Stage | Finnage Style | Activity |\n"
         "| :--- | :--- | :--- | :--- | :--- |\n"
     )
 
     rows_md = []
     for f in fish_rows:
-        level_badge = format_level_badge(f["stage"], f["icon"])
-        lang_badge = format_languages_pill(f.get("lang_raw", f["body_lang"]))
-        phenotype_badge = f"<b>{f['fin_style']}</b><br><sub>{f['archetype']}</sub>"
-        activity_badge = "🫧 <b>Active (<48h)</b>" if f["is_recent"] else f"💤 <i>{f['last_active']}</i>"
-        status_badge = f"⭐ {f['stars']} · {activity_badge}"
+        appearance = get_fish_appearance(f.get("lang_raw", ""), f["stage"], f["stars"], f["is_recent"])
+        level_str = format_level_badge(f["stage"])
+        phenotype_badge = f"{f['fin_style']}<br><sub>{f['archetype']}</sub>"
+        activity_str = "Active (<48h)" if f["is_recent"] else f"Idle ({f['last_active']})"
+        if f["stars"] > 0:
+            activity_str += f" · {f['stars']} star{'s' if f['stars'] > 1 else ''}"
 
         rows_md.append(
             f"| [**{f['name']}**]({f['url']}) "
-            f"| {level_badge}<br><code>{f['commits']:,} commits</code> "
-            f"| {lang_badge} "
+            f"| {appearance} "
+            f"| {level_str}<br><code>{f['commits']:,} commits</code> "
             f"| {phenotype_badge} "
-            f"| {status_badge} |"
+            f"| {activity_str} |"
         )
 
     table_body = "\n".join(rows_md) + "\n<!-- FISH_TABLE_END -->"
@@ -252,9 +293,9 @@ def main():
         sys.exit(1)
 
     print(f"============================================================")
-    print(f"  🐟 git-pet Aquarium Manager for @{user}")
+    print(f"  git-pet Aquarium Manager for @{user}")
     print(f"  Activity Deadline: Repos active within last {args.deadline_days} days")
-    print(f"  Tank Capacity Limit: Max {args.max_fish} fish (Spacious & Tranquil)")
+    print(f"  Tank Capacity Limit: Max {args.max_fish} fish")
     print(f"============================================================")
 
     repos_url = f"https://api.github.com/users/{user}/repos?sort=pushed&direction=desc&per_page=100"
@@ -436,7 +477,6 @@ def main():
         arch_name = meta.get("archetype", "Standard")
 
         lang_raw = languages_list[idx]
-        b_lang, f_lang, a_lang = parse_lang_slots(lang_raw)
 
         fish_rows.append({
             "name": rname,
@@ -446,10 +486,6 @@ def main():
             "stars": int(stars_list[idx]),
             "is_recent": is_recent_flag,
             "stage": stage_name,
-            "icon": get_stage_icon(stage_name),
-            "body_lang": b_lang,
-            "fin_lang": f_lang,
-            "accent_lang": a_lang,
             "lang_raw": lang_raw,
             "fin_style": fin_name,
             "archetype": arch_name,
